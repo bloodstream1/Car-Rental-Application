@@ -1,0 +1,46 @@
+<!-- <p>book-car works!</p> -->
+<!-- <p>edit-car works!</p> -->
+<div class="container">
+    <div class="row justify-content-center">
+        <a routerLink="/" class="back-link mt-2">Back</a>
+        <div class="col-md-5 mt-2">
+            <div class="card">
+                <div class="card-header h3 text-center">Book Car</div>
+                <div class="card-body">
+                    <form [formGroup]="BookCarForm" (ngSubmit)="BookCar()">
+                        <div class="form-group">
+                            <label for="maker"><b>Maker</b></label>
+                            <input type="text" class="form-control" id="maker" formControlName="maker" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="model"><b>Model</b></label>
+                            <input type="text" class="form-control" id="model" formControlName="model" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="rentalPrice"><b>Per Day Rent</b></label>
+                            <input type="number" class="form-control" id="rentalPrice" formControlName="rentalPrice">
+                        </div>
+                        <div class="form-group">
+                            <label for="duration"><b>Durantion (in days)</b></label>
+                            <input type="number" class="form-control" id="duration" formControlName="duration" placeholder="Please Enter the no. of days">
+                            <div class="form-text text-danger"
+                                *ngIf="Duration.errors?.['required'] && (Duration.dirty || Duration.touched)">
+                                Duration is a required field
+                            </div>
+                            <div class="form-text text-danger"
+                                *ngIf="Duration.errors?.['min'] && (Duration.dirty || Duration.touched)">
+                                Duration must be greater than 0
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-2" [disabled]="BookCarForm.invalid">Done</button>
+                        <div class="mt-3 text-center">
+                            <h5 class="text-success">
+                                {{message}}
+                            </h5>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

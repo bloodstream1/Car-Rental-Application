@@ -1,0 +1,17 @@
+.card {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+h5 strong{
+    margin: 12px;
+    color: #000;
+}
+
+h5{
+    color: rgb(93, 93, 104);
+}
+
+h4 strong{
+    color: #2939ec;
+}

@@ -1,0 +1,23 @@
+<nav class="navbar fixed-top navbar-dark bg-dark justify-content-between mb-5 d-flex">
+  <span class="navbar-brand mx-3 mb-0 h1">Car Rental App</span>
+  <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+    <li class="nav-item">
+      <a class="nav-link mb-0 mx-2" *ngIf="utilityService.isLoggedIn() && role==='Admin'" routerLink="/agreements">All
+        Agreements</a>
+      <a class="nav-link mb-0 mx-2" *ngIf="utilityService.isLoggedIn() && role==='User'" routerLink="/agreements">My
+        Agreements</a>
+    </li>
+  </ul>
+  <button *ngIf="!isLoginPage && !utilityService.isLoggedIn()" class="btn btn-primary mx-3 my-2 my-sm-0"
+    routerLink="/login">
+    Log In
+  </button>
+  <button *ngIf="(utilityService.isLoggedIn() && role==='Admin') && !isAddCarPage"
+    class="btn btn-success mx-3 my-2 my-sm-0" routerLink="/add-car">
+    Add New Car
+  </button>
+  <button *ngIf="utilityService.isLoggedIn()" class="btn btn-primary mx-3 my-2 my-sm-0" routerLink="/login"
+    (click)="utilityService.logoutUser()">
+    Log Out
+  </button>
+</nav>

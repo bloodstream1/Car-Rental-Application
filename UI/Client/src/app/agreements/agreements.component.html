@@ -1,0 +1,90 @@
+<!-- <p>agreements works!</p> -->
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <a routerLink="/" class="back-link mt-2 mb-4">Back</a>
+        <div *ngFor="let agreement of agreements" class="col-md-4 mb-4">
+            <div class="card mx-5" style="width: 24rem;">
+                <div class="card-body">
+                    <h5 class="card-text"><strong>User Id:</strong> {{agreement.userId}}</h5>
+                    <h5 class="card-text"><strong>Car:</strong> {{agreement.carMaker}} {{agreement.carModel}}</h5>
+                    <h5 class="card-text"><strong>Rental Price:</strong> {{agreement.carRentalPrice}}</h5>
+                    <h5 class="card-text"><strong>Duration:</strong> {{agreement.rentalDuration}}</h5>
+                    <h5 class="card-text"><strong>Total Cost:</strong> {{agreement.rentalDuration *
+                        agreement.carRentalPrice}}</h5>
+                </div>
+                <!-- Agreement - pending - 0-->
+                <div class="card-footer text-center" *ngIf="agreement.status === 0">
+                    <div class="my-2">
+                        <!-- for user only -->
+                        <button href="#" class="btn btn-success btn-lg mx-3"
+                            (click)="toggleAccept(agreement,agreement.CarId)"
+                            *ngIf="(utilityService.isLoggedIn() && role==='User')">Accept</button>
+                        <!-- for user and admin -->
+                        <button href="#" class="btn btn-primary btn-lg mx-3"
+                            (click)="editAgreement(agreement.agreementId)"
+                            *ngIf="utilityService.isLoggedIn()">Edit</button>
+                        <!-- for user and admin -->
+                        <button href="#" class="btn btn-danger btn-lg mx-3"
+                            (click)="deleteAgreement(agreement.agreementId)"
+                            *ngIf="utilityService.isLoggedIn()">Delete</button>
+                    </div>
+                </div>
+                <!-- Agreement - accepted - 1 -->
+                <!-- car - booked - 3 -->
+                <div class="card-footer text-center"
+                    *ngIf="agreement.status === 1 && agreement.carAvailabilityStatus === 3">
+                    <div class="my-2">
+                        <!-- if user -->
+                        <button href="#" class="btn btn-dark btn-lg"
+                            *ngIf="(utilityService.isLoggedIn() && role==='User')"
+                            (click)="toggleReturn(agreement,agreement.agreementId)">
+                            Request Car Return
+                        </button>
+                        <!-- if admin -->
+                        <h4 class="text-success" *ngIf="role==='Admin'"><strong>Booked</strong></h4>
+                    </div>
+                </div>
+                <!-- car status - request for return -->
+                <div class="card-footer text-center" *ngIf="agreement.carAvailabilityStatus === 4">
+                    <div class="my-2">
+                        <!-- if user -->
+                        <h4 class="text-muted" *ngIf="role==='User'"><strong>Requested Car Return</strong></h4>
+                        <!-- if admin -->
+                        <button href="#" class="btn btn-primary mx-3" *ngIf="role==='Admin'"
+                            (click)="toggleInspection(agreement,agreement.agreementId)">
+                            Mark for Inspection
+                        </button>
+                        <button href="#" class="btn btn-outline-success mx-2" *ngIf="role==='Admin'"
+                            (click)="toggleAcceptReturn(agreement,agreement.agreementId)">
+                            Accept Return
+                        </button>
+                    </div>
+                </div>
+                <div class="card-footer text-center" *ngIf="agreement.carAvailabilityStatus === 2">
+                    <div class="my-2">
+                        <!-- if user -->
+                        <h4 class="text-muted" *ngIf="role==='User'"><strong>Marked for Inspection</strong></h4>
+                        <!-- if admin -->
+                        <button href="#" class="btn btn-primary mx-3" *ngIf="role==='Admin'"
+                            (click)="toggleInspection(agreement,agreement.agreementId)" disabled>
+                            Mark for Inspection
+                        </button>
+                        <button href="#" class="btn btn-outline-success mx-2" *ngIf="role==='Admin'"
+                            (click)="toggleAcceptReturn(agreement,agreement.agreementId)">
+                            Accept Return
+                        </button>
+                    </div>
+                </div>
+                <div class="card-footer text-center" *ngIf="agreement.carAvailabilityStatus === 5 || agreement.status === 2">
+                    <div class="my-2">
+                        <!-- if user -->
+                        <h4 class="text-muted" *ngIf="role==='User'"><strong>Car Returned</strong></h4>
+                        <!-- if admin -->
+                        <button href="#" class="btn btn-danger btn-lg mx-3"
+                            (click)="deleteAgreement(agreement.agreementId)" *ngIf="role==='Admin'">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
